@@ -17,4 +17,8 @@ public final class Latte {
     private static WeakHashMap<String, Object> getConfigurations() {
         return Configurator.getInstance().getLatteConfigs();
     }
+
+    public static Context getApplication(){
+        return (Context) getConfigurations().get(ConfigType.APPLICATION_CONTEXT.name());
+    }
 }
