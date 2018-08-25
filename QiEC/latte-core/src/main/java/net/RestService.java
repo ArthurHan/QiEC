@@ -44,7 +44,7 @@ public interface RestService {
     @DELETE
     Call<String> delete(@Url String url, @QueryMap Map<String, Object> params);
 
-    @Streaming
+    @Streaming //一边下载一遍存，需要异步操作，如不加此注解则一次性写入内存，会造成内存溢出
     @GET
     Call<ResponseBody> download(@Url String url, @QueryMap Map<String, Object> params);
 
