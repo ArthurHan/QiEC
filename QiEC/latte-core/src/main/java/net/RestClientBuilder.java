@@ -1,5 +1,7 @@
 package net;
 
+import android.content.Context;
+
 import net.callback.IError;
 import net.callback.IFailure;
 import net.callback.IRequest;
@@ -10,19 +12,22 @@ import java.util.WeakHashMap;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import ui.LoaderStyle;
 
 /**
  * Created by HanFQ on 2018/8/23 0023.
  */
 public class RestClientBuilder {
 
-    private String mUrl;
+    private String mUrl = null;
     private static final Map<String, Object> PARAMS = RestCreator.getParams();
-    private IRequest mIRequest;
-    private ISuccess mISuccess;
-    private IError mIError;
-    private IFailure mIFailure;
-    private RequestBody mBody;
+    private IRequest mIRequest = null;
+    private ISuccess mISuccess = null;
+    private IError mIError = null;
+    private IFailure mIFailure = null;
+    private RequestBody mBody = null;
+    private Context mContext = null;
+    private LoaderStyle mLoaderStyle = null;
 
     RestClientBuilder() {
     }
@@ -67,7 +72,20 @@ public class RestClientBuilder {
         return this;
     }
 
+    public final RestClientBuilder loader(LoaderStyle loaderStyle, Context context) {
+        this.mContext = context;
+        this.mLoaderStyle = loaderStyle;
+        return this;
+    }
+
+    public final RestClientBuilder loader(Context context) {
+        this.mContext = context;
+        this.mLoaderStyle = LoaderStyle.LineScalePulseOutIndicator;
+        return this;
+    }
+
+
     public final RestClient build() {
-        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIError, mIFailure, mBody);
+        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIError, mIFailure, mBody, mLoaderStyle, mContext);
     }
 }

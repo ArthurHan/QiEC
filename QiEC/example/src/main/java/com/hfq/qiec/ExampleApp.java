@@ -15,7 +15,7 @@ public class ExampleApp extends Application {
         super.onCreate();
         Latte.init(this)
                 .withIcon(new FontAwesomeModule())
-                .withApiHost("http://news.baidu.com/")
+                .withApiHost("http://www.baidu.com/")
                 .configure();
     }
 }

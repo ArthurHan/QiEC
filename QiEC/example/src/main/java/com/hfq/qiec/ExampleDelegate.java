@@ -13,6 +13,7 @@ import net.callback.IFailure;
 import net.callback.ISuccess;
 
 import delegates.LatteDelegate;
+import ui.LoaderStyle;
 
 /**
  * Created by HanFQ on 2018/8/23 0023.
@@ -31,10 +32,11 @@ public class ExampleDelegate extends LatteDelegate {
     private void testRestClient() {
         RestClient.builder()
                 .url("http://news.baidu.com/")
+                .loader(getContext())
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .failure(new IFailure() {

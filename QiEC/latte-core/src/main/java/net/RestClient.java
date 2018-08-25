@@ -1,5 +1,7 @@
 package net;
 
+import android.content.Context;
+
 import net.callback.IError;
 import net.callback.IFailure;
 import net.callback.IRequest;
@@ -12,6 +14,8 @@ import java.util.WeakHashMap;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import ui.LatteLoader;
+import ui.LoaderStyle;
 
 /**
  * Created by HanFQ on 2018/8/23 0023.
@@ -25,6 +29,8 @@ public class RestClient {
     private final IError ERROR;
     private final IFailure FAILURE;
     private final RequestBody BODY;
+    private final LoaderStyle LOADER_STYLE;
+    private final Context CONTEXT;
 
     public RestClient(String url,
                       Map<String, Object> params,
@@ -32,7 +38,9 @@ public class RestClient {
                       ISuccess success,
                       IError error,
                       IFailure failure,
-                      RequestBody body) {
+                      RequestBody body,
+                      LoaderStyle loaderStyle,
+                      Context context) {
         this.URL = url;
         PARAMS.putAll(params);
         this.REQUEST = request;
@@ -40,6 +48,8 @@ public class RestClient {
         this.ERROR = error;
         this.FAILURE = failure;
         this.BODY = body;
+        this.LOADER_STYLE = loaderStyle;
+        this.CONTEXT = context;
     }
 
     public static RestClientBuilder builder() {
@@ -53,6 +63,11 @@ public class RestClient {
         if (REQUEST != null) {
             REQUEST.onRequestStart();
         }
+
+        if (LOADER_STYLE != null) {
+            LatteLoader.showLoading(CONTEXT, LOADER_STYLE);
+        }
+
 
         switch (method) {
             case GET:
@@ -81,7 +96,8 @@ public class RestClient {
                 REQUEST,
                 SUCCESS,
                 ERROR,
-                FAILURE
+                FAILURE,
+                LOADER_STYLE
         );
     }
 
